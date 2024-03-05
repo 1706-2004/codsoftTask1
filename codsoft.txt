@@ -1,0 +1,403 @@
+Task 1
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the Day App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #quote {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quote of the Day App</h1>
+    <button onclick="fetchQuote()">Get Quote</button>
+    <div id="quote"></div>
+
+    <script>
+        function fetchQuote() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.quotable.io/random', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var quoteData = JSON.parse(xhr.responseText);
+                    document.getElementById('quote').innerHTML = '<p>"' + quoteData.content + '"</p>';
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspiring Quotes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #quote-container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        #quote-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #refresh-button, #share-button, #favorite-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        #refresh-button:hover, #share-button:hover, #favorite-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="quote-container">
+        <p id="quote-text">Loading...</p>
+        <button id="refresh-button">Refresh Quote</button>
+        <button id="share-button">Share Quote</button>
+        <button id="favorite-button">Add to Favorites</button>
+    </div>
+
+    <script>
+        // Sample quotes
+        const quotes = [
+            "The only way to do great work is to love what you do. – Steve Jobs",
+            "Believe you can and you're halfway there. – Theodore Roosevelt",
+            "It does not matter how slowly you go as long as you do not stop. – Confucius",
+            "The best time to plant a tree was 20 years ago. The second best time is now. – Chinese Proverb",
+            "Your limitation—it's only your imagination.",
+            "Push yourself, because no one else is going to do it for you.",
+            "Great things never come from comfort zones."
+        ];
+
+        // Get random quote
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        // Update quote text
+        function updateQuote() {
+            document.getElementById("quote-text").innerText = getRandomQuote();
+        }
+
+        // Event listeners
+        document.getElementById("refresh-button").addEventListener("click", updateQuote);
+        document.getElementById("share-button").addEventListener("click", shareQuote);
+        document.getElementById("favorite-button").addEventListener("click", addToFavorites);
+
+        // Function to share quote (replace with actual sharing functionality)
+        function shareQuote() {
+            const quoteText = document.getElementById("quote-text").innerText;
+            console.log("Shared quote:", quoteText);
+        }
+
+        // Function to add to favorites (replace with actual functionality)
+        function addToFavorites() {
+            const quoteText = document.getElementById("quote-text").innerText;
+            console.log("Added to favorites:", quoteText);
+        }
+
+        // Initial quote display
+        updateQuote();
+    </script>
+</body>
+</html>
+
+
+
+TASK 2
+
+               <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <div class="question" data-correct-answer="Paris">
+            <p>What is the capital of France?</p>
+            <input type="radio" name="q1" value="London"> London<br>
+            <input type="radio" name="q1" value="Paris"> Paris<br>
+            <input type="radio" name="q1" value="Berlin"> Berlin<br>
+            <input type="radio" name="q1" value="Rome"> Rome<br>
+            <button onclick="checkAnswer(this)">Submit Answer</button>
+            <p class="feedback" style="display: none;"></p>
+        </div>
+        
+        <div class="question" data-correct-answer="Jupiter">
+            <p>What is the largest planet in our solar system?</p>
+            <input type="radio" name="q2" value="Jupiter"> Jupiter<br>
+            <input type="radio" name="q2" value="Mars"> Mars<br>
+            <input type="radio" name="q2" value="Saturn"> Saturn<br>
+            <input type="radio" name="q2" value="Earth"> Earth<br>
+            <button onclick="checkAnswer(this)">Submit Answer</button>
+            <p class="feedback" style="display: none;"></p>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button) {
+            var questionDiv = button.parentElement;
+            var selectedAnswer = questionDiv.querySelector("input[type='radio']:checked");
+            var correctAnswer = questionDiv.getAttribute("data-correct-answer");
+            var feedback = questionDiv.querySelector(".feedback");
+
+            if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                feedback.textContent = "Correct!";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = "Incorrect! The correct answer is: " + correctAnswer;
+                feedback.style.color = "red";
+            }
+
+            feedback.style.display = "block";
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .quiz-list {
+            list-style: none;
+            padding: 0;
+        }
+        .quiz-list li {
+            margin-bottom: 10px;
+        }
+        .start-quiz-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .question-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 5px;
+        }
+        .submit-answer-btn {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .result-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .result {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Quiz App</h1
+
+TASK 3
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Attendance App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>University Attendance App</h1>
+    </header>
+    <div class="container">
+        <h2>Student Login</h2>
+        <form id="student-login-form">
+            <input type="text" name="student-id" placeholder="Student ID">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#student-registration">Register as a student</a></p>
+    </div>
+
+    <div class="container" id="student-registration" style="display: none;">
+        <h2>Student Registration</h2>
+        <form id="student-registration-form">
+            <input type="text" name="student-id" placeholder="Student ID">
+            <input type="text" name="name" placeholder="Name">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="#student-login">Login</a></p>
+    </div>
+
+    <div class="container">
+        <h2>Instructor Login</h2>
+        <form id="instructor-login-form">
+            <input type="text" name="instructor-id" placeholder="Instructor ID">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#instructor-registration">Register as an instructor</a></p>
+    </div>
+
+    <div class="container" id="instructor-registration" style="display: none;">
+        <h2>Instructor Registration</h2>
+        <form id="instructor-registration-form">
+            <input type="text" name="instructor-id" placeholder="Instructor ID">
+            <input type="text" name="name" placeholder="Name">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="#instructor-login">Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("student-login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle student login
+        });
+
+        document.getElementById("student-registration-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle student registration
+        });
+
+        document.getElementById("instructor-login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle instructor login
+        });
+
+        document.getElementById("instructor-registration-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Handle instructor registration
+        });
+    </script>
+</body>
+</html>
